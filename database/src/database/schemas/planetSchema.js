@@ -18,16 +18,24 @@ planetSchema.statics.list = async function () {
     return await this.find()
     .populate("residents", ["_id", "name"])
     .populate("films", ["_id", "title"]);
-}
-
-planetSchema.statics.getById = async function (id) {
-    return await this.findById(id)
+  };
+  
+  planetSchema.statics.getOne = async function (_id) {
+    return await this.findById(_id)
     .populate("residents", ["_id", "name"])
     .populate("films", ["_id", "title"]);
-}
-
-planetSchema.statics.insert = async function (character) {
-    return await this.create(character);
-}
+  };
+  
+  planetSchema.statics.insert = async function (planet) {
+    return await this.create(planet);
+  };
+  
+  planetSchema.statics.edit = async function (_id, data) {
+    return await this.updateOne({ _id }, data);
+  };
+  
+  planetSchema.statics.deleted = async function (id) {
+    return await this.deleteOne({ _id: id });
+  };
 
 module.exports = planetSchema;

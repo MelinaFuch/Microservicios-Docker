@@ -1,26 +1,13 @@
 const { Router } = require("express");
-const store = require("../database");
+const controllers = require("../controllers");
 const { validateModel } = require("../middleware");
 
 const router = Router();
 
-router.get("/:model", validateModel, async (req, res) => {
-    const { model } = req.params;
-    const response = await store[model].list();
-    res.status(200).json(response);
-})
-
-router.get("/:model/:id", validateModel, async (req, res) => {
-    const { model, id } = req.params;
-    const response = await store[model].getById(id);
-    res.status(200).json(response);
-})
-
-router.post("/:model", validateModel, async (req, res) => {
-    const { model } = req.params;
-    const body = req.body;
-    const response = await store[model].insert(body);
-    res.status(200).json(response);
-})
+router.get("/:model", validateModel, controllers.getAll);
+router.get("/:model/:id", validateModel, controllers.getOne);
+router.post("/:model", validateModel, controllers.create);
+router.put("/:model/:id", validateModel, controllers.edit);
+router.delete("/:model/:id", validateModel, controllers.delete);
 
 module.exports = router;

@@ -8,12 +8,8 @@ server.use(express.json());
 server.use(morgan("dev"));
 
 server.use("/films", require("./routes"));
-server.use('*', (req, res) => {
-    res.status(404).send('Not found')
-})
 
 server.use('*', (req, res) => {
-    // throw new ClientError('Not foundt404', 406)
     res.status(404).send('Not found')
 })
 
